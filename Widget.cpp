@@ -655,11 +655,14 @@ namespace raincious
 
 				void Main::run()
 				{
-					Print::Debug("Starting widgets ...", "");
+					if (tickThreadHandle == NULL && uiThreadHandle == NULL)
+					{
+						Print::Debug("Starting widgets ...", "");
 
-					// Start UI response thread
-					tickThreadHandle = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)UIDataUpdateThread, NULL, 0, NULL);
-					uiThreadHandle = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)UIMessagingThread, NULL, 0, NULL);
+						// Start UI response thread
+						tickThreadHandle = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)UIDataUpdateThread, NULL, 0, NULL);
+						uiThreadHandle = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)UIMessagingThread, NULL, 0, NULL);
+					}
 				}
 
 				void Main::onCreate(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)

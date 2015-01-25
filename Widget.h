@@ -116,12 +116,12 @@ namespace raincious
 
 					MountedWidgetList list;
 					RECT windowOriginalRect, windowExpectingRect, widgetTargetOriginalRect;
-					uint windowExpectingWidth, windowExpectingHeight, windowOriginalWidth, windowOriginalHeight;
-					uint widgetTargetOriginalWidth, widgetTargetOriginalHeight;
-					uint widgetCurrentTop, widgetCurrentLeft, widgetCurrentWidth, widgetCurrentHeight;
-					HANDLE tickThreadHandle, uiThreadHandle;
-					HWND window, widgetWindow;
-					HHOOK windowEventHook;
+					uint windowExpectingWidth = 0, windowExpectingHeight = 0, windowOriginalWidth = 0, windowOriginalHeight = 0;
+					uint widgetTargetOriginalWidth = 0, widgetTargetOriginalHeight = 0;
+					uint widgetCurrentTop = 0, widgetCurrentLeft = 0, widgetCurrentWidth = 0, widgetCurrentHeight = 0;
+					HANDLE tickThreadHandle = NULL, uiThreadHandle = NULL;
+					HWND window = NULL, widgetWindow = NULL;
+					HHOOK windowEventHook = NULL;
 					WNDPROC oldWindowProc = NULL;
 
 					bool threadStopSignal = false, tickThreadRunning = false, uiThreadRunning = false;
