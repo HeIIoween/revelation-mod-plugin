@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include <memory>
 
 #include "../flhookplugin_sdk/headers/FLHook.h"
 
@@ -70,17 +71,17 @@ namespace raincious
 					~DummyClient();
 				};
 
-				typedef EXPORT map <uint, Client*> ClientList;
+				typedef EXPORT map <uint, shared_ptr<Client>> ClientList;
 
 				class EXPORT Clients
 				{
 				public:
 					static Clients& Get();
-					static Client* dummy();
+					static shared_ptr<Client> dummy();
 
 					bool add(uint& clientID);
 					bool remove(uint& clientID);
-					Client* get(uint& clientID);
+					shared_ptr<Client> get(uint& clientID);
 					bool exists(uint& clientID);
 
 					void renew(uint& clientID);

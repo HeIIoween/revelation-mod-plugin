@@ -426,7 +426,7 @@ namespace raincious
 					return HKE_UNKNOWN_ERROR;
 				}
 
-				HK_ERROR PlayerStatus::commandCash(uint commandID, Clients::Client *client)
+				HK_ERROR PlayerStatus::commandCash(uint commandID, shared_ptr<Clients::Client> client)
 				{
 					int iCash;
 					HK_ERROR error;
@@ -442,7 +442,7 @@ namespace raincious
 					return HkAddCash(client->getName(), 0 - iCash);
 				}
 
-				HK_ERROR PlayerStatus::commandBeam(uint commandID, Clients::Client *client)
+				HK_ERROR PlayerStatus::commandBeam(uint commandID, shared_ptr<Clients::Client> client)
 				{
 					wstring playerName = L"", wscCharFileName = L"";
 					HK_ERROR error = HKE_UNKNOWN_ERROR;
@@ -473,7 +473,7 @@ namespace raincious
 							client->sendMessage(
 								L"Server admin wants to move you to "
 								+ stows(beamDestinations[commandID].Name)
-								+ L". But that could only be possible when you not in space."
+								+ L". But that could only be possible when you are not in space."
 								);
 
 							MessageBox(widget, "Player must land on a base in order to be moved.", "Moving player", MB_ICONWARNING);
@@ -550,7 +550,7 @@ namespace raincious
 					return error;
 				}
 
-				HK_ERROR PlayerStatus::commandFriendlyBase(Clients::Client *client)
+				HK_ERROR PlayerStatus::commandFriendlyBase(shared_ptr<Clients::Client> client)
 				{
 					HK_ERROR err = HKE_UNKNOWN_ERROR;
 					HKPLAYERINFO playerInfo;

@@ -19,7 +19,7 @@ namespace raincious
 					~SystemData();
 
 					void setFaction(wstring fNickname);
-					FactionData SystemData::getFaction();
+					FactionData* SystemData::getFaction();
 
 					void setTerritory(wstring fTerritory);
 					wstring getTerritory();

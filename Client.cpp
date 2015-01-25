@@ -23,7 +23,7 @@ namespace raincious
 
 					for (iter = list.begin(); iter != list.end(); iter++)
 					{
-						delete iter->second;
+						list.erase(iter->first);
 					}
 
 					Print::Debug(L"Client list has been released.", L"");
@@ -36,11 +36,9 @@ namespace raincious
 					return instance;
 				}
 
-				Client* Clients::dummy()
+				shared_ptr<Client> Clients::dummy()
 				{
-					static DummyClient* instance = new DummyClient();
-
-					return instance;
+					return shared_ptr<Client>(new DummyClient());
 				}
 
 				bool Clients::exists(uint& clientID)
@@ -88,7 +86,7 @@ namespace raincious
 						return false;
 					}
 
-					Client* client = new Client();
+					shared_ptr<Client> client = shared_ptr<Client>(new Client());
 
 					client->bind(clientID);
 
@@ -106,18 +104,14 @@ namespace raincious
 						return false;
 					}
 
-					Client * client = list[clientID];
-
 					list.erase(clientID);
-
-					delete client;
 
 					Print::Debug("Client " + to_string(clientID) + " has been removed.", "");
 
 					return true;
 				}
 
-				Client* Clients::get(uint& clientID)
+				shared_ptr<Client> Clients::get(uint& clientID)
 				{
 					if (!exists(clientID))
 					{

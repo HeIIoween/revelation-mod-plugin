@@ -4,6 +4,7 @@
 
 #include <windows.h>
 #include <commctrl.h>
+#include <memory>
 
 #include "Widget.h"
 #include "Data.h"
@@ -84,9 +85,9 @@ namespace raincious
 					void update();
 
 					HK_ERROR commands(uint commandID, uint clientID);
-					HK_ERROR commandBeam(uint commandID, Clients::Client *client);
-					HK_ERROR commandCash(uint commandID, Clients::Client *client);
-					HK_ERROR commandFriendlyBase(Clients::Client *client);
+					HK_ERROR commandBeam(uint commandID, shared_ptr<Clients::Client> client);
+					HK_ERROR commandCash(uint commandID, shared_ptr<Clients::Client> client);
+					HK_ERROR commandFriendlyBase(shared_ptr<Clients::Client> client);
 				};
 
 			}
