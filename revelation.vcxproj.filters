@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Data.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseData.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="SystemData.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ShipData.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="FactionData.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="GoodsData.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Export.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Tools.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Print.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Hooks.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Widget.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerListWidget.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerStatusWidget.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Data.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Header.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseData.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="DataItems.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemData.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ShipData.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GoodsData.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="FactionData.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Export.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Print.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Hooks.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Client.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Widget.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerListWidget.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerStatusWidget.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{84f4684b-3411-4c62-ad80-6ed24b0e8848}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{539efcdc-bff5-4765-a706-c78f0715f824}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
