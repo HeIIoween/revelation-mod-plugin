@@ -221,7 +221,7 @@ namespace raincious
 
 						try
 						{
-							player->System = ws2s(clientIter->second->getSystem().getName());
+							player->System = ws2s(clientIter->second->getSystem()->getName());
 						}
 						catch (Exception::NickNameNotFound &e)
 						{

@@ -313,9 +313,9 @@ namespace raincious
 					return playerInfo.wscSystem;
 				}
 
-				DataItem::SystemData Client::getSystem()
+				DataItem::SystemData* Client::getSystem()
 				{
-					return Data::getSystem(getSystemNick());
+					return &Data::getSystem(getSystemNick());
 				}
 
 				wstring Client::getBaseNick()
@@ -328,9 +328,9 @@ namespace raincious
 					return playerInfo.wscBase;
 				}
 
-				DataItem::BaseData Client::getBase()
+				DataItem::BaseData* Client::getBase()
 				{
-					return Data::getBase(getBaseNick());
+					return &Data::getBase(getBaseNick());
 				}
 
 				HK_ERROR Client::sendMessage(wstring message)

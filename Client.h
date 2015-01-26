@@ -38,10 +38,10 @@ namespace raincious
 					wstring getIP();
 
 					wstring getSystemNick();
-					DataItem::SystemData getSystem();
+					DataItem::SystemData* getSystem();
 
 					wstring getBaseNick();
-					DataItem::BaseData getBase();
+					DataItem::BaseData* getBase();
 
 					HK_ERROR sendMessage(wstring message);
 
