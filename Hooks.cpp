@@ -31,12 +31,12 @@ namespace HkIServerImpl
 		Clients::Clients::Get().renew(iClientID);
 	}
 
-	void __stdcall PlayerLaunch(uint iShip, uint iClientID)
+	void __stdcall BaseEnter_AFTER(uint iBaseID, uint iClientID)
 	{
 		Clients::Clients::Get().renew(iClientID);
 	}
 
-	void __stdcall BaseEnter(uint iBaseID, uint iClientID)
+	void __stdcall BaseExit_AFTER(uint iBaseID, uint iClientID)
 	{
 		Clients::Clients::Get().renew(iClientID);
 	}

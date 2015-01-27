@@ -7,6 +7,7 @@
 
 #include "SystemData.h"
 #include "BaseData.h"
+#include "ShipData.h"
 
 using namespace std;
 
@@ -22,6 +23,8 @@ namespace raincious
 				class EXPORT Client
 				{
 				public:
+					typedef map <wstring, wstring> MessageAssign;
+
 					Client();
 					~Client();
 
@@ -40,10 +43,19 @@ namespace raincious
 					wstring getSystemNick();
 					DataItem::SystemData* getSystem();
 
+					Universe::IBase* getBaseObj();
+					Archetype::Solar* getBaseArch();
 					wstring getBaseNick();
 					DataItem::BaseData* getBase();
 
+					Archetype::Ship* getShipArch();
+					wstring getShipNick();
+					DataItem::ShipData* getShip();
+
 					HK_ERROR sendMessage(wstring message);
+					HK_ERROR sendMessage(wstring format, MessageAssign &assigns);
+					HK_ERROR sendXMLMessage(wstring message);
+					HK_ERROR sendXMLMessage(wstring format, MessageAssign &assigns);
 
 				protected:
 					HKPLAYERINFO playerInfo;
@@ -62,6 +74,8 @@ namespace raincious
 
 					bool isAssigned = false;
 					bool hasAdminPermission = false;
+
+					static void parseMessage(wstring &format, MessageAssign &assigns, wstring &result, bool isXML);
 				};
 
 				class DummyClient : public Client
@@ -99,8 +113,40 @@ namespace raincious
 					Clients();
 					~Clients();
 				};
-			}
 
+				namespace Exception
+				{
+
+					class EXPORT InvalidShipID : public exception
+					{
+					public:
+						virtual const char* what() const throw()
+						{
+							return "Invalid ship ID";
+						}
+					};
+
+					class EXPORT InvalidBaseNick : public exception
+					{
+					public:
+						virtual const char* what() const throw()
+						{
+							return "Invalid base nickname";
+						}
+					};
+
+					class EXPORT InvalidBaseNotFound : public exception
+					{
+					public:
+						virtual const char* what() const throw()
+						{
+							return "Base can't be found";
+						}
+					};
+
+				}
+
+			}
 		}
 	}
 }

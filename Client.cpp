@@ -1,8 +1,7 @@
 #include "Client.h"
-
 #include "Data.h"
-
 #include "Print.h"
+#include "Tools.h"
 
 namespace raincious
 {
@@ -12,6 +11,10 @@ namespace raincious
 		{
 			namespace Clients
 			{
+				Exception::InvalidShipID InvalidShipIDException;
+				Exception::InvalidBaseNick InvalidBaseNickException;
+				Exception::InvalidBaseNotFound InvalidBaseNotFoundException;
+
 				Clients::Clients()
 				{
 					Print::Debug(L"Initializing client list ...", L"");
@@ -221,6 +224,8 @@ namespace raincious
 
 				void Client::renew()
 				{
+					HKPLAYERINFO pi;
+
 					if (!isValid())
 					{
 						return;
@@ -228,13 +233,16 @@ namespace raincious
 
 					try
 					{
-						lastFetchedPlayerName = Players.GetActiveCharacterName(playerClientID);
+						playerName = Players.GetActiveCharacterName(ID());
 
-						if (lastFetchedPlayerName != playerName)
+						if (HKE_OK == HkGetPlayerInfo(playerName, pi, false))
 						{
-							if (HKE_OK == HkGetPlayerInfo(lastFetchedPlayerName, playerInfo, false))
+							playerInfo = pi;
+
+							if (lastFetchedPlayerName != playerName)
 							{
-								playerName = playerInfo.wscCharname;
+								lastFetchedPlayerName = playerName;
+
 								PlayerNameChar = playerInfo.wscCharname.c_str();
 
 								if ((HKE_OK == HkGetAdmin(playerName, adminRights)) && adminRights != L"")
@@ -318,11 +326,32 @@ namespace raincious
 					return &Data::getSystem(getSystemNick());
 				}
 
+				Universe::IBase* Client::getBaseObj()
+				{
+					uint baseID = Universe::get_base_id(ws2s(getBaseNick()).c_str());
+
+					if (baseID == 0)
+					{
+						throw InvalidBaseNotFoundException;
+					}
+
+					return Universe::get_base(baseID);
+				}
+
+				Archetype::Solar* Client::getBaseArch()
+				{
+					uint archID = 0;
+
+					pub::SpaceObj::GetArchetypeID(getBaseObj()->lSpaceObjID, archID);
+
+					return Archetype::GetSolar(archID);
+				}
+
 				wstring Client::getBaseNick()
 				{
-					if (!isValid())
+					if (!isValid() || playerInfo.wscBase == L"")
 					{
-						return L"";
+						throw InvalidBaseNickException;
 					}
 
 					return playerInfo.wscBase;
@@ -333,6 +362,42 @@ namespace raincious
 					return &Data::getBase(getBaseNick());
 				}
 
+				Archetype::Ship* Client::getShipArch()
+				{
+					if (!isValid() || playerInfo.iShip == 0)
+					{
+						throw InvalidShipIDException;
+					}
+
+					return Archetype::GetShip(playerInfo.iShip);
+				}
+
+				wstring Client::getShipNick()
+				{
+					return stows(getShipArch()->szName);
+				}
+
+				DataItem::ShipData* Client::getShip()
+				{
+					return &Data::getShip(getShipNick());
+				}
+
+				void Client::parseMessage(wstring &format, MessageAssign &assigns, wstring &result, bool isXML)
+				{
+					MessageAssign::iterator iter;
+
+					result = format;
+
+					for (iter = assigns.begin(); iter != assigns.end(); ++iter)
+					{
+						result = ReplaceStr(
+							result,
+							iter->first,
+							isXML ? XMLText(iter->second) : iter->second
+							);
+					}
+				}
+
 				HK_ERROR Client::sendMessage(wstring message)
 				{
 					if (!isValid())
@@ -340,12 +405,45 @@ namespace raincious
 						return HKE_UNKNOWN_ERROR;
 					}
 
-					if (message.find(L"<TRA ") != string::npos)
+					return HkMsg(ID(), message);
+				}
+
+				HK_ERROR Client::sendMessage(wstring format, MessageAssign &assigns)
+				{
+					wstring parsedMessage = L"";
+
+					if (!isValid())
 					{
-						return HkFMsg(ID(), message);
+						return HKE_UNKNOWN_ERROR;
 					}
 
-					return HkMsg(ID(), message);
+					parseMessage(format, assigns, parsedMessage, false);
+
+					return HkFMsg(ID(), parsedMessage);
+				}
+
+				HK_ERROR Client::sendXMLMessage(wstring message)
+				{
+					if (!isValid())
+					{
+						return HKE_UNKNOWN_ERROR;
+					}
+
+					return HkFMsg(ID(), message);
+				}
+
+				HK_ERROR Client::sendXMLMessage(wstring format, MessageAssign &assigns)
+				{
+					wstring parsedMessage = L"";
+
+					if (!isValid())
+					{
+						return HKE_UNKNOWN_ERROR;
+					}
+
+					parseMessage(format, assigns, parsedMessage, true);
+
+					return HkFMsg(ID(), parsedMessage);
 				}
 			}
 		}
