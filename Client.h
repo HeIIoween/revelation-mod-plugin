@@ -44,7 +44,7 @@ namespace raincious
 					DataItem::SystemData* getSystem();
 
 					Universe::IBase* getBaseObj();
-					Archetype::Solar* getBaseArch();
+					uint getBaseID();
 					wstring getBaseNick();
 					DataItem::BaseData* getBase();
 
@@ -56,6 +56,11 @@ namespace raincious
 					HK_ERROR sendMessage(wstring format, MessageAssign &assigns);
 					HK_ERROR sendXMLMessage(wstring message);
 					HK_ERROR sendXMLMessage(wstring format, MessageAssign &assigns);
+
+					HK_ERROR Client::kill();
+					HK_ERROR Client::beam(wstring baseNick);
+					HK_ERROR Client::ban();
+					HK_ERROR Client::kick();
 
 				protected:
 					HKPLAYERINFO playerInfo;
@@ -117,12 +122,12 @@ namespace raincious
 				namespace Exception
 				{
 
-					class EXPORT InvalidShipID : public exception
+					class EXPORT InvalidShipArchetypeID : public exception
 					{
 					public:
 						virtual const char* what() const throw()
 						{
-							return "Invalid ship ID";
+							return "Invalid ship archetype ID";
 						}
 					};
 

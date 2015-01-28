@@ -11,7 +11,7 @@ namespace raincious
 		{
 			namespace Clients
 			{
-				Exception::InvalidShipID InvalidShipIDException;
+				Exception::InvalidShipArchetypeID InvalidShipArchetypeIDException;
 				Exception::InvalidBaseNick InvalidBaseNickException;
 				Exception::InvalidBaseNotFound InvalidBaseNotFoundException;
 
@@ -311,6 +311,7 @@ namespace raincious
 					return playerInfo.wscIP;
 				}
 
+				// System
 				wstring Client::getSystemNick()
 				{
 					if (!isValid())
@@ -326,9 +327,10 @@ namespace raincious
 					return &Data::getSystem(getSystemNick());
 				}
 
+				// Base
 				Universe::IBase* Client::getBaseObj()
 				{
-					uint baseID = Universe::get_base_id(ws2s(getBaseNick()).c_str());
+					uint baseID = getBaseID();
 
 					if (baseID == 0)
 					{
@@ -338,13 +340,9 @@ namespace raincious
 					return Universe::get_base(baseID);
 				}
 
-				Archetype::Solar* Client::getBaseArch()
+				uint Client::getBaseID()
 				{
-					uint archID = 0;
-
-					pub::SpaceObj::GetArchetypeID(getBaseObj()->lSpaceObjID, archID);
-
-					return Archetype::GetSolar(archID);
+					return Data::getBase(getBaseNick()).getID();
 				}
 
 				wstring Client::getBaseNick()
@@ -362,26 +360,28 @@ namespace raincious
 					return &Data::getBase(getBaseNick());
 				}
 
+				// Ship
 				Archetype::Ship* Client::getShipArch()
 				{
-					if (!isValid() || playerInfo.iShip == 0)
+					if (!isValid() || Players[ID()].iShipArchetype == 0)
 					{
-						throw InvalidShipIDException;
+						throw InvalidShipArchetypeIDException;
 					}
 
-					return Archetype::GetShip(playerInfo.iShip);
+					return Archetype::GetShip(Players[ID()].iShipArchetype);
 				}
 
 				wstring Client::getShipNick()
 				{
-					return stows(getShipArch()->szName);
+					return Data::getShip(getShipArch()->iArchID).getNickname();
 				}
 
 				DataItem::ShipData* Client::getShip()
 				{
-					return &Data::getShip(getShipNick());
+					return &Data::getShip(getShipArch()->iArchID);
 				}
 
+				// Message
 				void Client::parseMessage(wstring &format, MessageAssign &assigns, wstring &result, bool isXML)
 				{
 					MessageAssign::iterator iter;
@@ -444,6 +444,27 @@ namespace raincious
 					parseMessage(format, assigns, parsedMessage, true);
 
 					return HkFMsg(ID(), parsedMessage);
+				}
+
+				// Misc
+				HK_ERROR Client::kill()
+				{
+					return HkKill(getName());
+				}
+
+				HK_ERROR Client::beam(wstring baseNick)
+				{
+					return HkBeam(getName(), baseNick);
+				}
+
+				HK_ERROR Client::ban()
+				{
+					return HkBan(getName(), true);
+				}
+
+				HK_ERROR Client::kick()
+				{
+					return HkKick(getName());
 				}
 			}
 		}

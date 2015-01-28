@@ -36,7 +36,7 @@ namespace HkIServerImpl
 		Clients::Clients::Get().renew(iClientID);
 	}
 
-	void __stdcall BaseExit_AFTER(uint iBaseID, uint iClientID)
+	void __stdcall PlayerLaunch_AFTER(uint iShip, uint iClientID)
 	{
 		Clients::Clients::Get().renew(iClientID);
 	}

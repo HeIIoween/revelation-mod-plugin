@@ -1,4 +1,5 @@
 #include "Item.h"
+#include "Tools.h"
 
 namespace raincious
 {
@@ -19,11 +20,18 @@ namespace raincious
 				void Base::setNickname(wstring nName)
 				{
 					nickname = ToLower(nName);
+
+					id = CreateID(ws2s(nickname).c_str());
 				}
 
 				wstring Base::getNickname()
 				{
 					return nickname;
+				}
+
+				uint Base::getID()
+				{
+					return id;
 				}
 
 				void Base::setName(wstring nName)

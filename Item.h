@@ -22,12 +22,16 @@ namespace raincious
 					void setName(wstring nName);
 					wstring getName();
 
+					uint getID();
+
 				protected:
 					Base();
 					~Base();
 
 					wstring nickname = L"";
 					wstring name = L"";
+
+					uint id = 0;
 				};
 			}
 		}
