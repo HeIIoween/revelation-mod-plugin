@@ -377,7 +377,9 @@ namespace raincious
 					{
 						Print::Error("Can't get size of FLServer window. Binding aborted.", "");
 
-						return;
+						main->threadStopSignal = true;
+
+						ExitThread(1); return;
 					}
 					else
 					{
@@ -400,7 +402,9 @@ namespace raincious
 					{
 						Print::Error("Can't get size of FLServer window. Binding aborted.", "");
 
-						return;
+						main->threadStopSignal = true;
+
+						ExitThread(1); return;
 					}
 					else
 					{
@@ -433,7 +437,7 @@ namespace raincious
 					{
 						Print::Error("Can't re-point WindowProc handler, widget will not be enabled.", "");
 
-						main->threadStopSignal = false;
+						main->threadStopSignal = true;
 
 						ExitThread(1); return;
 					}
@@ -441,7 +445,7 @@ namespace raincious
 					// Send message, tell window proc to init widgets
 					if (!CallWindowProc(WindowProc, main->window, WIDGET_WM_INIT_WIDGETS, NULL, NULL))
 					{
-						main->threadStopSignal = false;
+						main->threadStopSignal = true;
 
 						ExitThread(1); return;
 					}
