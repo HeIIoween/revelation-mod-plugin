@@ -39,6 +39,7 @@ namespace raincious
 
 					void flag(const string key, long flagValue);
 					long flag(const string key);
+					Flags flag();
 
 					wstring getName();
 					wstring getAccountID();

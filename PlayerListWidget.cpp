@@ -239,9 +239,15 @@ namespace raincious
 							player->Flags.append("Admin");
 						}
 
-						for (flagIter = flagsData.begin(); flagIter != flagsData.end(); flagIter)
+						flagsData = clientIter->second->flag();
+						for (flagIter = flagsData.begin(); flagIter != flagsData.end(); ++flagIter)
 						{
-							player->Flags.append("; " + flagIter->first + " (" + to_string(flagIter->second) + ")");
+							if (!player->Flags.empty())
+							{
+								player->Flags.append("; ");
+							}
+
+							player->Flags.append(flagIter->first + " (" + to_string(flagIter->second) + ")");
 						}
 
 						player->cID = player->ID.c_str();

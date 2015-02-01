@@ -281,6 +281,11 @@ namespace raincious
 					return hasAdminPermission;
 				}
 
+				Client::Flags Client::flag()
+				{
+					return flags;
+				}
+
 				long Client::flag(const string key)
 				{
 					return flags[key];
