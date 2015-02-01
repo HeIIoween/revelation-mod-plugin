@@ -24,6 +24,7 @@ namespace raincious
 				{
 				public:
 					typedef map <wstring, wstring> MessageAssign;
+					typedef map <string, long> Flags;
 
 					Client();
 					~Client();
@@ -35,6 +36,9 @@ namespace raincious
 
 					uint ID();
 					bool isAdmin();
+
+					void flag(const string key, long flagValue);
+					long flag(const string key);
 
 					wstring getName();
 					wstring getAccountID();
@@ -65,6 +69,8 @@ namespace raincious
 				protected:
 					HKPLAYERINFO playerInfo;
 					CAccount *playerAccount;
+
+					Flags flags;
 
 					wstring playerName = L"", lastFetchedPlayerName = L"";
 					const wchar_t* PlayerNameChar = L"";

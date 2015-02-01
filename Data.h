@@ -25,20 +25,20 @@ namespace raincious
 				static void addFaction(DataItem::FactionData item);
 				static void addGoods(DataItem::GoodsData item);
 
-				static DataItem::BaseData& getBase(wstring nickname);
-				static DataItem::BaseData& getBase(uint id);
+				static DataItem::BaseData* getBase(wstring nickname);
+				static DataItem::BaseData* getBase(uint id);
 
-				static DataItem::SystemData& getSystem(wstring nickname);
-				static DataItem::SystemData& getSystem(uint id);
+				static DataItem::SystemData* getSystem(wstring nickname);
+				static DataItem::SystemData* getSystem(uint id);
 
-				static DataItem::ShipData& getShip(wstring nickname);
-				static DataItem::ShipData& getShip(uint id);
+				static DataItem::ShipData* getShip(wstring nickname);
+				static DataItem::ShipData* getShip(uint id);
 
-				static DataItem::FactionData& getFaction(wstring nickname);
-				static DataItem::FactionData& getFaction(uint id);
+				static DataItem::FactionData* getFaction(wstring nickname);
+				static DataItem::FactionData* getFaction(uint id);
 
-				static DataItem::GoodsData& getGoods(wstring nickname);
-				static DataItem::GoodsData& getGoods(uint id);
+				static DataItem::GoodsData* getGoods(wstring nickname);
+				static DataItem::GoodsData* getGoods(uint id);
 
 				static map <wstring, DataItem::BaseData> getAllBases();
 

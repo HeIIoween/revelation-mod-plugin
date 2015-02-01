@@ -201,6 +201,8 @@ namespace raincious
 				{
 					Clients::ClientList::iterator clientIter;
 					Clients::ClientList clients = Clients::Clients::Get().all();
+					Clients::Client::Flags::iterator flagIter;
+					Clients::Client::Flags flagsData;
 
 					Players empty;
 
@@ -234,7 +236,12 @@ namespace raincious
 
 						if (clientIter->second->isAdmin())
 						{
-							player->Flags.append("Admin ");
+							player->Flags.append("Admin");
+						}
+
+						for (flagIter = flagsData.begin(); flagIter != flagsData.end(); flagIter)
+						{
+							player->Flags.append("; " + flagIter->first + " (" + to_string(flagIter->second) + ")");
 						}
 
 						player->cID = player->ID.c_str();
@@ -569,7 +576,7 @@ namespace raincious
 
 					err = HkSetRep(
 						client->getName(), 
-						Data::getBase(playerInfo.wscBase).getFaction()->getNickname(),
+						Data::getBase(playerInfo.wscBase)->getFaction()->getNickname(),
 						(float)0.65
 						);
 					if (err == HKE_OK)

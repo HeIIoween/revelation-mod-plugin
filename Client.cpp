@@ -281,6 +281,16 @@ namespace raincious
 					return hasAdminPermission;
 				}
 
+				long Client::flag(const string key)
+				{
+					return flags[key];
+				}
+
+				void Client::flag(const string key, long flagValue)
+				{
+					flags[key] = flagValue;
+				}
+
 				wstring Client::getName()
 				{
 					if (!isValid())
@@ -324,7 +334,7 @@ namespace raincious
 
 				DataItem::SystemData* Client::getSystem()
 				{
-					return &Data::getSystem(getSystemNick());
+					return Data::getSystem(getSystemNick());
 				}
 
 				// Base
@@ -342,7 +352,7 @@ namespace raincious
 
 				uint Client::getBaseID()
 				{
-					return Data::getBase(getBaseNick()).getID();
+					return Data::getBase(getBaseNick())->getID();
 				}
 
 				wstring Client::getBaseNick()
@@ -357,7 +367,7 @@ namespace raincious
 
 				DataItem::BaseData* Client::getBase()
 				{
-					return &Data::getBase(getBaseNick());
+					return Data::getBase(getBaseNick());
 				}
 
 				// Ship
@@ -373,12 +383,12 @@ namespace raincious
 
 				wstring Client::getShipNick()
 				{
-					return Data::getShip(getShipArch()->iArchID).getNickname();
+					return Data::getShip(getShipArch()->iArchID)->getNickname();
 				}
 
 				DataItem::ShipData* Client::getShip()
 				{
-					return &Data::getShip(getShipArch()->iArchID);
+					return Data::getShip(getShipArch()->iArchID);
 				}
 
 				// Message
@@ -392,7 +402,7 @@ namespace raincious
 					{
 						result = ReplaceStr(
 							result,
-							iter->first,
+							L"${" + iter->first + L"}",
 							isXML ? XMLText(iter->second) : iter->second
 							);
 					}

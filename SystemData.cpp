@@ -25,7 +25,7 @@ namespace raincious
 
 				FactionData* SystemData::getFaction()
 				{
-					return &Data::getFaction(factionNickName);
+					return Data::getFaction(factionNickName);
 				}
 
 				void SystemData::setTerritory(wstring fTerritory)

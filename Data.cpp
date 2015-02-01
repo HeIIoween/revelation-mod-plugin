@@ -46,7 +46,7 @@ namespace raincious
 				baseDataIDRef[item.getID()] = &baseData[nick];
 			}
 
-			DataItem::BaseData& Data::getBase(wstring nickname)
+			DataItem::BaseData* Data::getBase(wstring nickname)
 			{
 				nickname = ToLower(nickname);
 
@@ -59,10 +59,10 @@ namespace raincious
 					throw e;
 				}
 
-				return baseData[nickname];
+				return &baseData[nickname];
 			}
 
-			DataItem::BaseData& Data::getBase(uint id)
+			DataItem::BaseData* Data::getBase(uint id)
 			{
 				if (baseDataIDRef.find(id) == baseDataIDRef.end())
 				{
@@ -73,7 +73,7 @@ namespace raincious
 					throw e;
 				}
 
-				return *baseDataIDRef[id];
+				return baseDataIDRef[id];
 			}
 
 			map <wstring, DataItem::BaseData> Data::getAllBases()
@@ -100,7 +100,7 @@ namespace raincious
 				systemDataIDRef[item.getID()] = &systemData[nick];
 			}
 
-			DataItem::SystemData& Data::getSystem(wstring nickname)
+			DataItem::SystemData* Data::getSystem(wstring nickname)
 			{
 				nickname = ToLower(nickname);
 
@@ -113,10 +113,10 @@ namespace raincious
 					throw e;
 				}
 
-				return systemData[nickname];
+				return &systemData[nickname];
 			}
 
-			DataItem::SystemData& Data::getSystem(uint id)
+			DataItem::SystemData* Data::getSystem(uint id)
 			{
 				if (systemDataIDRef.find(id) == systemDataIDRef.end())
 				{
@@ -127,7 +127,7 @@ namespace raincious
 					throw e;
 				}
 
-				return *systemDataIDRef[id];
+				return systemDataIDRef[id];
 			}
 
 			// Ship
@@ -149,7 +149,7 @@ namespace raincious
 				shipDataIDRef[item.getID()] = &shipData[nick];
 			}
 
-			DataItem::ShipData& Data::getShip(wstring nickname)
+			DataItem::ShipData* Data::getShip(wstring nickname)
 			{
 				nickname = ToLower(nickname);
 
@@ -161,10 +161,10 @@ namespace raincious
 					throw e;
 				}
 
-				return shipData[nickname];
+				return &shipData[nickname];
 			}
 
-			DataItem::ShipData& Data::getShip(uint id)
+			DataItem::ShipData* Data::getShip(uint id)
 			{
 				if (shipDataIDRef.find(id) == shipDataIDRef.end())
 				{
@@ -175,7 +175,7 @@ namespace raincious
 					throw e;
 				}
 
-				return *shipDataIDRef[id];
+				return shipDataIDRef[id];
 			}
 
 			// Faction
@@ -197,7 +197,7 @@ namespace raincious
 				factionDataIDRef[item.getID()] = &factionData[nick];
 			}
 
-			DataItem::FactionData& Data::getFaction(wstring nickname)
+			DataItem::FactionData* Data::getFaction(wstring nickname)
 			{
 				nickname = ToLower(nickname);
 
@@ -209,10 +209,10 @@ namespace raincious
 					throw e;
 				}
 
-				return factionData[nickname];
+				return &factionData[nickname];
 			}
 
-			DataItem::FactionData& Data::getFaction(uint id)
+			DataItem::FactionData* Data::getFaction(uint id)
 			{
 				if (factionDataIDRef.find(id) == factionDataIDRef.end())
 				{
@@ -223,7 +223,7 @@ namespace raincious
 					throw e;
 				}
 
-				return *factionDataIDRef[id];
+				return factionDataIDRef[id];
 			}
 
 			// Goods
@@ -245,7 +245,7 @@ namespace raincious
 				goodsDataIDRef[item.getID()] = &goodsData[nick];
 			}
 
-			DataItem::GoodsData& Data::getGoods(wstring nickname)
+			DataItem::GoodsData* Data::getGoods(wstring nickname)
 			{
 				nickname = ToLower(nickname);
 
@@ -258,10 +258,10 @@ namespace raincious
 					throw e;
 				}
 
-				return goodsData[nickname];
+				return &goodsData[nickname];
 			}
 
-			DataItem::GoodsData& Data::getGoods(uint id)
+			DataItem::GoodsData* Data::getGoods(uint id)
 			{
 				if (goodsDataIDRef.find(id) == goodsDataIDRef.end())
 				{
@@ -272,7 +272,7 @@ namespace raincious
 					throw e;
 				}
 
-				return *goodsDataIDRef[id];
+				return goodsDataIDRef[id];
 			}
 
 		}

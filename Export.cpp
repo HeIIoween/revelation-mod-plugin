@@ -10,31 +10,55 @@ namespace raincious
 	{
 		namespace Revelation
 		{
-			EXPORT DataItem::BaseData& GetBase(wstring nickname)
+			EXPORT DataItem::BaseData* GetBase(uint uid)
+			{
+				return Data::getBase(uid);
+			}
+
+			EXPORT DataItem::BaseData* GetBase(wstring nickname)
 			{
 				return Data::getBase(nickname);
 			}
 
-			EXPORT DataItem::SystemData& GetSystem(wstring nickname)
+			EXPORT DataItem::SystemData* GetSystem(uint uid)
+			{
+				return Data::getSystem(uid);
+			}
+
+			EXPORT DataItem::SystemData* GetSystem(wstring nickname)
 			{
 				return Data::getSystem(nickname);
 			}
 
-			EXPORT DataItem::ShipData& GetShip(wstring nickname)
+			EXPORT DataItem::ShipData* GetShip(uint uid)
+			{
+				return Data::getShip(uid);
+			}
+
+			EXPORT DataItem::ShipData* GetShip(wstring nickname)
 			{
 				return Data::getShip(nickname);
 			}
 
-			EXPORT DataItem::FactionData& GetFaction(wstring nickname)
+			EXPORT DataItem::FactionData* GetFaction(uint uid)
+			{
+				return Data::getFaction(uid);
+			}
+
+			EXPORT DataItem::FactionData* GetFaction(wstring nickname)
 			{
 				return Data::getFaction(nickname);
 			}
 
-			EXPORT DataItem::GoodsData& GetGoods(wstring nickname)
+			EXPORT DataItem::GoodsData* GetGoods(uint uid)
+			{
+				return Data::getGoods(uid);
+			}
+
+			EXPORT DataItem::GoodsData* GetGoods(wstring nickname)
 			{
 				return Data::getGoods(nickname);
 			}
-
 
 			EXPORT string GetStoragePath(const char *name)
 			{
@@ -54,6 +78,11 @@ namespace raincious
 				}
 
 				return dataDir;
+			}
+
+			EXPORT int GetRandNumber(int min, int max)
+			{
+				return randNumber(min, max);
 			}
 
 			namespace Console

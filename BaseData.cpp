@@ -28,7 +28,7 @@ namespace raincious
 
 				SystemData* BaseData::getSystem()
 				{
-					return &Data::getSystem(systemNickName);
+					return Data::getSystem(systemNickName);
 				}
 
 				void BaseData::setFaction(wstring fNickname)
@@ -38,7 +38,7 @@ namespace raincious
 
 				FactionData* BaseData::getFaction()
 				{
-					return &Data::getFaction(factionNickName);
+					return Data::getFaction(factionNickName);
 				}
 
 			}

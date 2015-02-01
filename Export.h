@@ -11,13 +11,23 @@ namespace raincious
 	{
 		namespace Revelation
 		{
-			EXPORT DataItem::BaseData& GetBase(wstring nickname);
-			EXPORT DataItem::SystemData& GetSystem(wstring nickname);
-			EXPORT DataItem::ShipData& GetShip(wstring nickname);
-			EXPORT DataItem::FactionData& GetFaction(wstring nickname);
-			EXPORT DataItem::GoodsData& GetGoods(wstring nickname);
+			EXPORT DataItem::BaseData* GetBase(uint uid);
+			EXPORT DataItem::BaseData* GetBase(wstring nickname);
+
+			EXPORT DataItem::SystemData* GetSystem(uint uid);
+			EXPORT DataItem::SystemData* GetSystem(wstring nickname);
+
+			EXPORT DataItem::ShipData* GetShip(uint uid);
+			EXPORT DataItem::ShipData* GetShip(wstring nickname);
+
+			EXPORT DataItem::FactionData* GetFaction(uint uid);
+			EXPORT DataItem::FactionData* GetFaction(wstring nickname);
+
+			EXPORT DataItem::GoodsData* GetGoods(uint uid);
+			EXPORT DataItem::GoodsData* GetGoods(wstring nickname);
 
 			EXPORT string GetStoragePath(const char *name);
+			EXPORT int GetRandNumber(int min, int max);
 
 			namespace Console
 			{
