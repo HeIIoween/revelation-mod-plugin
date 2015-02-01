@@ -288,12 +288,24 @@ namespace raincious
 
 				long Client::flag(const string key)
 				{
+					if (flags.find(key) == flags.end())
+					{
+						return 0;
+					}
+
 					return flags[key];
 				}
 
 				void Client::flag(const string key, long flagValue)
 				{
-					flags[key] = flagValue;
+					if (flagValue == 0)
+					{
+						flags.erase(key);
+					}
+					else
+					{
+						flags[key] = flagValue;
+					}
 				}
 
 				wstring Client::getName()
