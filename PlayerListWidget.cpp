@@ -399,7 +399,7 @@ namespace raincious
 						break;
 
 					case ID_PLAYERSTATUS_CTXMENU_KILL:
-						if (client.get(clientID)->kick() == HKE_OK)
+						if (client.get(clientID)->kill() == HKE_OK)
 						{
 							client.get(clientID)->sendMessage(L"You've killed by server admin.");
 
