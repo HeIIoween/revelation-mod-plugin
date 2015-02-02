@@ -19,7 +19,7 @@ The plugin exposes it's own inner data and tool's interfaces such as In-game pla
 
 For example, you want to get where are the faction who running the base, all you have to do now is: 
 
-	wstring factionName = Data::getBase(L"li01_01_base").getFaction()->getName();
+	wstring factionName = Data::getBase(L"li01_01_base")->getFaction()->getName();
 
 
 And that's all
