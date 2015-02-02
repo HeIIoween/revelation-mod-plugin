@@ -62,14 +62,15 @@ namespace raincious
 					HK_ERROR sendXMLMessage(wstring message);
 					HK_ERROR sendXMLMessage(wstring format, MessageAssign &assigns);
 
-					HK_ERROR Client::kill();
-					HK_ERROR Client::beam(wstring baseNick);
-					HK_ERROR Client::ban();
-					HK_ERROR Client::kick();
+					HK_ERROR kill();
+					HK_ERROR beam(wstring baseNick);
+					HK_ERROR ban();
+					HK_ERROR kick();
 
 				protected:
 					HKPLAYERINFO playerInfo;
 					CAccount *playerAccount;
+					PlayerData playerData;
 
 					Flags flags;
 

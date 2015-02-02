@@ -399,7 +399,7 @@ namespace raincious
 						break;
 
 					case ID_PLAYERSTATUS_CTXMENU_KILL:
-						if (HkKill(client.get(clientID)->getName()) == HKE_OK)
+						if (client.get(clientID)->kick() == HKE_OK)
 						{
 							client.get(clientID)->sendMessage(L"You've killed by server admin.");
 
@@ -408,11 +408,9 @@ namespace raincious
 						break;
 
 					case ID_PLAYERSTATUS_CTXMENU_BAN:
-						playerName = client.get(clientID)->getName();
-
 						client.get(clientID)->sendMessage(L"You have been banned by server admin.");
 
-						if (HkBan(playerName, true) == HKE_OK)
+						if (client.get(clientID)->ban() == HKE_OK)
 						{
 							return HkKick(playerName);
 						}

@@ -24,7 +24,7 @@ namespace raincious
 				{
 					ClientList::iterator iter;
 
-					for (iter = list.begin(); iter != list.end(); iter++)
+					for (iter = list.begin(); iter != list.end(); ++iter)
 					{
 						list.erase(iter->first);
 					}
@@ -73,7 +73,7 @@ namespace raincious
 				{
 					ClientList::iterator iter;
 
-					for (iter = list.begin(); iter != list.end(); iter++)
+					for (iter = list.begin(); iter != list.end(); ++iter)
 					{
 						if (exists((uint)iter->first))
 						{
@@ -154,7 +154,7 @@ namespace raincious
 
 					ClientList::iterator iter;
 
-					for (iter = list.begin(); iter != list.end(); iter++)
+					for (iter = list.begin(); iter != list.end(); ++iter)
 					{
 						if (iter->second->getBaseNick() != baseNick)
 						{
@@ -238,6 +238,7 @@ namespace raincious
 						if (HKE_OK == HkGetPlayerInfo(playerName, pi, false))
 						{
 							playerInfo = pi;
+							playerData = Players[ID()];
 
 							if (lastFetchedPlayerName != playerName)
 							{
@@ -314,7 +315,7 @@ namespace raincious
 					{
 						return L"";
 					}
-
+					
 					return playerInfo.wscCharname;
 				}
 
@@ -390,12 +391,12 @@ namespace raincious
 				// Ship
 				Archetype::Ship* Client::getShipArch()
 				{
-					if (!isValid() || Players[ID()].iShipArchetype == 0)
+					if (!isValid() || playerData.iShipArchetype == 0)
 					{
 						throw InvalidShipArchetypeIDException;
 					}
 
-					return Archetype::GetShip(Players[ID()].iShipArchetype);
+					return Archetype::GetShip(playerData.iShipArchetype);
 				}
 
 				wstring Client::getShipNick()
