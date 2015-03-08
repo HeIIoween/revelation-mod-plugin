@@ -144,3 +144,91 @@ HK_ERROR editPlayerCharFile(wstring wscCharname, IniEditItemSet &inis)
 
 	return HKE_OK;
 }
+
+void lTrim(string &str)
+{
+	unsigned int length = str.length(), loop = 0, endLoop = 0;
+
+	for (loop = 0; loop < length; ++loop)
+	{
+		if (str[loop] == ' ' || str[loop] == '\t')
+		{
+			continue;
+		}
+
+		endLoop = loop;
+
+		break;
+	}
+
+	str = str.substr(endLoop, length);
+}
+
+void rTrim(string &str)
+{
+	unsigned int length = str.length(), loop = 0, endLoop = 0;
+
+	for (loop = length - 1; loop >= 0; --loop)
+	{
+		if (str[loop] == ' ' || str[loop] == '\t')
+		{
+			continue;
+		}
+
+		endLoop = loop;
+
+		break;
+	}
+
+	str = str.substr(0, endLoop + 1);
+}
+
+void trim(string &str)
+{
+	lTrim(str);
+	rTrim(str);
+}
+
+void lTrim(wstring &str)
+{
+	unsigned int length = str.length(), loop = 0, endLoop = 0;
+
+	for (loop = 0; loop < length; ++loop)
+	{
+		if (str[loop] == L' ' || str[loop] == L'\t')
+		{
+			continue;
+		}
+
+		endLoop = loop;
+
+		break;
+	}
+
+	str = str.substr(endLoop, length);
+}
+
+void rTrim(wstring &str)
+{
+	unsigned int length = str.length(), loop = 0, endLoop = 0;
+
+	for (loop = length - 1; loop >= 0; --loop)
+	{
+		if (str[loop] == L' ' || str[loop] == L'\t')
+		{
+			continue;
+		}
+
+		endLoop = loop;
+
+		break;
+	}
+
+	str = str.substr(0, endLoop + 1);
+}
+
+void trim(wstring &str)
+{
+	lTrim(str);
+	rTrim(str);
+}

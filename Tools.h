@@ -30,3 +30,10 @@ bool createStorageDir(const char *dir);
 void putDirReadme(const char *dir);
 
 HK_ERROR editPlayerCharFile(wstring fileName, IniEditItemSet &inis);
+
+void lTrim(string &str);
+void rTrim(string &str);
+void trim(string &str);
+void lTrim(wstring &str);
+void rTrim(wstring &str);
+void trim(wstring &str);

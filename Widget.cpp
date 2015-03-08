@@ -60,14 +60,18 @@ namespace raincious
 				{
 					map <UINT_PTR, WidgetSubClassInfo>::iterator iter;
 
-					for (iter = InstanceSubClassIDMap.begin(); iter != InstanceSubClassIDMap.end(); ++iter)
+					for (iter = InstanceSubClassIDMap.begin(); iter != InstanceSubClassIDMap.end();)
 					{
 						if (iter->second.Instance == instance)
 						{
-							InstanceSubClassIDMap.erase(iter->first);
+							iter = InstanceSubClassIDMap.erase(iter);
 
 							return true;
 						}
+                        else
+                        {
+                            ++iter;
+                        }
 					}
 
 					return false;
@@ -217,6 +221,7 @@ namespace raincious
 					}
 
 					delete Instance;
+
 					Instance = nullptr;
 				}
 
@@ -372,6 +377,9 @@ namespace raincious
 					DWORD waitStatus = 0;
 					short threadReturn = 0;
 					MSG eventMessage;
+					MountedWidgetList::iterator iter;
+					vector <const char*> mountedWidgets;
+					vector <const char*>::iterator mountedWidgetIter;
 
 					if (!GetWindowRect(main->window, &main->windowOriginalRect))
 					{
@@ -488,6 +496,23 @@ namespace raincious
 						Print::Error(e.what(), "");
 					}
 
+					// Kill all widgets
+					for (iter = main->list.begin(); iter != main->list.end(); ++iter)
+					{
+						iter->second->setDisable(true);
+
+						mountedWidgets.push_back(iter->first);
+					}
+
+					for (mountedWidgetIter = mountedWidgets.begin(); mountedWidgetIter != mountedWidgets.end(); ++mountedWidgetIter)
+					{
+						main->demount((*mountedWidgetIter));
+					}
+
+					// Recover the old proc before thread get's closed
+					SetWindowLongPtr(main->window, GWLP_WNDPROC, (LONG_PTR)main->oldWindowProc);
+					main->oldWindowProc = NULL;
+
 					main->uiThreadRunning = false;
 
 					ExitThread(threadReturn);
@@ -550,13 +575,6 @@ namespace raincious
 						window = currentWindow;
 					}
 
-					// Disable the maximize button, re-enable the code after making sure the auto resize will work
-					/*SetWindowLong(
-						currentWindow,
-						GWL_STYLE,
-						GetWindowLong(currentWindow, GWL_STYLE) & ~WS_MAXIMIZEBOX
-						);*/
-
 					// Get the window which we will put widget on
 					widgetWindow = GetDlgItem(window, WINDOWID_FLSERVER_STATUSFRAME);
 
@@ -572,8 +590,6 @@ namespace raincious
 
 				Main::~Main()
 				{
-					MountedWidgetList::iterator iter;
-
 					threadStopSignal = true;
 
 					Print::Debug("Exiting widget UI managing module ...", "");
@@ -590,40 +606,28 @@ namespace raincious
 
 					UpdateWindow(window);
 
-					while (true)
+					Print::Debug("Waiting UI threads to be exited.", "");
+
+					// Stop tick first
+					if (tickThreadRunning)
 					{
-						Sleep(300);
-
-						if (tickThreadRunning)
-						{
-							continue;
-						}
-
-						if (uiThreadRunning)
-						{
-							continue;
-						}
-
-						break;
+						WaitForSingleObject(tickThreadHandle, INFINITE);
 					}
+
+					if (uiThreadRunning)
+					{
+						WaitForSingleObject(uiThreadHandle, INFINITE);
+					}
+
+					CloseHandle(tickThreadHandle);
+					CloseHandle(uiThreadHandle);
+
+					tickThreadHandle = NULL;
+					uiThreadHandle = NULL;
 
 					threadStopSignal = false;
 
-					CloseHandle(tickThreadHandle);
-
-					Print::Debug("UI threads has been ended.", "");
-
-					for (iter = list.begin(); iter != list.end(); ++iter)
-					{
-						demount(iter->first);
-					}
-
-					if (oldWindowProc != NULL)
-					{
-						SetWindowLongPtr(window, GWLP_WNDPROC, (LONG_PTR)oldWindowProc);
-					}
-
-					Print::Debug("Widget has been stopped and released.", "");
+					Print::Debug("Widget control stopped.", "");
 				}
 
 				// Mount & Demount

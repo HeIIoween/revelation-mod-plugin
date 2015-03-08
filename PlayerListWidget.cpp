@@ -3,6 +3,7 @@
 #include "Print.h"
 #include "Data.h"
 #include "Tools.h"
+#include "Language.h"
 
 namespace raincious
 {
@@ -401,25 +402,35 @@ namespace raincious
 					case ID_PLAYERSTATUS_CTXMENU_KILL:
 						if (client.get(clientID)->kick() == HKE_OK)
 						{
-							client.get(clientID)->sendMessage(L"You've killed by server admin.");
+							client.get(clientID)->sendMessage(Language::Get()->lang(
+								"WIDGET_CMD_ADMIN_KILL",
+								L"You've killed by server admin."
+								));
 
 							return HKE_OK;
 						}
 						break;
 
 					case ID_PLAYERSTATUS_CTXMENU_BAN:
-						client.get(clientID)->sendMessage(L"You have been banned by server admin.");
-
 						if (client.get(clientID)->ban() == HKE_OK)
 						{
-							return HkKick(playerName);
+							client.get(clientID)->sendMessage(
+								Language::Get()->lang(
+								"WIDGET_CMD_ADMIN_BAN",
+								L"You have been banned by server admin."
+								));
+
+							return client.get(clientID)->kick();
 						}
 						break;
 
 					case ID_PLAYERSTATUS_CTXMENU_KICK:
 						if (HkKickReason(
-							client.get(clientID)->getName(), 
-							L"You are kicked from server by server admin.") == HKE_OK)
+							client.get(clientID)->getName(),
+							Language::Get()->lang(
+								"WIDGET_CMD_ADMIN_KICK",
+								L"You are kicked from server by server admin."
+							)) == HKE_OK)
 						{
 							return HKE_OK;
 						}
@@ -448,7 +459,10 @@ namespace raincious
 						return error;
 					}
 
-					client->sendMessage(L"All of your credits has been removed by server admin.");
+					client->sendMessage(Language::Get()->lang(
+						"WIDGET_CMD_ADMIN_FINE",
+						L"All of your credits has been removed by server admin."
+						));
 
 					return HkAddCash(client->getName(), 0 - iCash);
 				}
@@ -461,6 +475,7 @@ namespace raincious
 					uint baseID = 0, playerOldSystemID = 0;
 					float baseHealth = 0.0, baseMaxHealth = 0.0;
 					CHARACTER_ID cID;
+					Clients::Client::MessageAssign assign;
 
 					if (beamDestinations.find(commandID) == beamDestinations.end())
 					{
@@ -479,12 +494,17 @@ namespace raincious
 							return HKE_NO_MATCHING_PLAYER;
 						}
 
+						assign[L"BASE"] = stows(beamDestinations[commandID].Name);
+
 						if (playerInfo.iShip != 0)
 						{
 							client->sendMessage(
-								L"Server admin wants to move you to "
-								+ stows(beamDestinations[commandID].Name)
-								+ L". But that could only be possible when you are not in space."
+								Language::Get()->lang(
+									"WIDGET_CMD_ADMIN_BEAM_INSPACE",
+									L"Server admin wants to move you to ${BASE}" \
+									L". But that could only be possible when you are not in space."
+								),
+								assign
 								);
 
 							MessageBox(widget, "Player must land on a base in order to be moved.", "Moving player", MB_ICONWARNING);
@@ -493,9 +513,11 @@ namespace raincious
 						}
 
 						client->sendMessage(
-							L"Server admin is moving your to "
-							+ stows(beamDestinations[commandID].Name)
-							+ L". Please be prepared."
+							Language::Get()->lang(
+								"WIDGET_CMD_ADMIN_BEAM",
+								L"Server admin is moving your to ${BASE}. Please be prepared."
+							),
+							assign
 							);
 
 						// Make sure they never come back
@@ -583,10 +605,14 @@ namespace raincious
 						Data::getBase(playerInfo.wscBase)->getFaction()->getNickname(),
 						(float)0.65
 						);
+
 					if (err == HKE_OK)
 					{
 						client->sendMessage(
-							L"You are now friendly with the faction which runing the base you currently docked."
+							Language::Get()->lang(
+								"WIDGET_CMD_ADMIN_BASEFRIENDLY",
+								L"You are now friendly with the faction which runing the base you currently docked."
+							)
 							);
 
 						return HKE_OK;

@@ -100,10 +100,13 @@
       <WholeProgramOptimization>true</WholeProgramOptimization>
       <ExceptionHandling>Async</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PrecompiledHeader />
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>MaxSpeed</Optimization>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -116,6 +119,9 @@
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalDependencies>comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <Version>0.1</Version>
+      <SwapRunFromNET />
     </Link>
     <PostBuildEvent>
       <Command />
@@ -123,16 +129,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BaseData.cpp" />
+    <ClCompile Include="Command.cpp" />
     <ClCompile Include="Data.cpp" />
     <ClCompile Include="Export.cpp" />
     <ClCompile Include="FactionData.cpp" />
     <ClCompile Include="GoodsData.cpp" />
     <ClCompile Include="Hooks.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Language.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="PlayerListWidget.cpp" />
     <ClCompile Include="Print.cpp" />
+    <ClCompile Include="RevelationVersionCommand.cpp" />
     <ClCompile Include="ServerStatusWidget.cpp" />
     <ClCompile Include="ShipData.cpp" />
     <ClCompile Include="SystemData.cpp" />
@@ -141,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseData.h" />
+    <ClInclude Include="Command.h" />
     <ClInclude Include="Data.h" />
     <ClInclude Include="Export.h" />
     <ClInclude Include="FactionData.h" />
@@ -150,8 +160,10 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="DataItems.h" />
     <ClInclude Include="Client.h" />
+    <ClInclude Include="Language.h" />
     <ClInclude Include="PlayerListWidget.h" />
     <ClInclude Include="Print.h" />
+    <ClInclude Include="RevelationVersionCommand.h" />
     <ClInclude Include="ServerStatusWidget.h" />
     <ClInclude Include="ShipData.h" />
     <ClInclude Include="SystemData.h" />

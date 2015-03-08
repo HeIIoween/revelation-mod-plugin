@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../flhookplugin_sdk/headers/FLHook.h"
 
 namespace HkIServerImpl

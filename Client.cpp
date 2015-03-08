@@ -22,14 +22,7 @@ namespace raincious
 
 				Clients::~Clients()
 				{
-					ClientList::iterator iter;
-
-					for (iter = list.begin(); iter != list.end(); ++iter)
-					{
-						list.erase(iter->first);
-					}
-
-					Print::Debug(L"Client list has been released.", L"");
+					Print::Debug(L"Releasing Client list ...", L"");
 				}
 
 				Clients& Clients::Get()
@@ -41,7 +34,9 @@ namespace raincious
 
 				shared_ptr<Client> Clients::dummy()
 				{
-					return shared_ptr<Client>(new DummyClient());
+					static shared_ptr<Client> dummyInstance = shared_ptr<Client>(new DummyClient());
+
+					return dummyInstance;
 				}
 
 				bool Clients::exists(uint& clientID)
@@ -233,7 +228,7 @@ namespace raincious
 
 					try
 					{
-						playerName = Players.GetActiveCharacterName(ID());
+						playerName = (const wchar_t*)Players.GetActiveCharacterName(ID());
 
 						if (HKE_OK == HkGetPlayerInfo(playerName, pi, false))
 						{
@@ -412,16 +407,19 @@ namespace raincious
 				// Message
 				void Client::parseMessage(wstring &format, MessageAssign &assigns, wstring &result, bool isXML)
 				{
+					wstring to = L"";
 					MessageAssign::iterator iter;
 
 					result = format;
 
 					for (iter = assigns.begin(); iter != assigns.end(); ++iter)
 					{
+						to = isXML ? XMLText(iter->second) : iter->second;
+
 						result = ReplaceStr(
 							result,
 							L"${" + iter->first + L"}",
-							isXML ? XMLText(iter->second) : iter->second
+							to
 							);
 					}
 				}
@@ -447,7 +445,7 @@ namespace raincious
 
 					parseMessage(format, assigns, parsedMessage, false);
 
-					return HkFMsg(ID(), parsedMessage);
+					return HkMsg(ID(), parsedMessage);
 				}
 
 				HK_ERROR Client::sendXMLMessage(wstring message)
