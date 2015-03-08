@@ -220,6 +220,7 @@ namespace raincious
 				void Client::renew()
 				{
 					HKPLAYERINFO pi;
+					CAccount *acc;
 
 					if (!isValid())
 					{
@@ -240,6 +241,9 @@ namespace raincious
 								lastFetchedPlayerName = playerName;
 
 								PlayerNameChar = playerInfo.wscCharname.c_str();
+
+								acc = Players.FindAccountFromClientID(ID());
+								accountID = acc->wszAccID;
 
 								if ((HKE_OK == HkGetAdmin(playerName, adminRights)) && adminRights != L"")
 								{
@@ -316,12 +320,7 @@ namespace raincious
 
 				wstring Client::getAccountID()
 				{
-					if (!isValid())
-					{
-						return L"";
-					}
-
-					return playerAccount->wszAccID;
+					return accountID;
 				}
 
 				wstring Client::getIP()

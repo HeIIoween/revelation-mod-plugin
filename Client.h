@@ -69,7 +69,6 @@ namespace raincious
 
 				protected:
 					HKPLAYERINFO playerInfo;
-					CAccount *playerAccount;
 					PlayerData playerData;
 
 					Flags flags;
