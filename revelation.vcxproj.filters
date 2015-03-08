@@ -49,6 +49,15 @@
     <ClCompile Include="ServerStatusWidget.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="Command.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="RevelationVersionCommand.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Language.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Data.h">
@@ -100,6 +109,15 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="ServerStatusWidget.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="RevelationVersionCommand.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Language.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,6 +4,7 @@
 #include "DataItems.h"
 
 #include "Client.h"
+#include "Command.h"
 
 namespace raincious
 {
@@ -44,6 +45,18 @@ namespace raincious
 			namespace Client
 			{
 				EXPORT Clients::Clients& Get();
+			}
+
+			namespace Cmd
+			{
+				EXPORT void Mount(const wstring& prefix, const wstring& paramater, const wstring& description, unique_ptr<CommandBase> commandProc);
+				EXPORT void Demount(const wstring& prefix);
+			}
+
+			namespace Langauge
+			{
+				EXPORT const wstring& Get(const string key, const wstring defaultStr);
+				EXPORT void Import(const char* path);
 			}
 		}
 	}
