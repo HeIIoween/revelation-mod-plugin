@@ -140,7 +140,7 @@ namespace raincious
 				}
 			}
 
-			namespace Langauge
+			namespace Lang
 			{
 				EXPORT const wstring& Get(const string key, const wstring defaultStr)
 				{

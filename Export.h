@@ -53,7 +53,7 @@ namespace raincious
 				EXPORT void Demount(const wstring& prefix);
 			}
 
-			namespace Langauge
+			namespace Lang
 			{
 				EXPORT const wstring& Get(const string key, const wstring defaultStr);
 				EXPORT void Import(const char* path);
