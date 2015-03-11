@@ -24,11 +24,12 @@ namespace raincious
 
 				virtual bool execute(shared_ptr<Clients::Client> &client, vector <wstring> &parameters);
 
-				virtual bool isRunable(shared_ptr<Clients::Client> &client);
-				virtual wstring getClientManual(shared_ptr<Clients::Client> &client);
+				virtual void errored(shared_ptr<Clients::Client> &client, uint &errorCode);
+				virtual bool check(shared_ptr<Clients::Client> &client, uint &errorCode);
+				virtual wstring manual(shared_ptr<Clients::Client> &client);
 			};
 
-			class EXPORT Command
+			class Command
 			{
 			public:
 				typedef vector <wstring> SplitedCommandPrefix;
@@ -38,6 +39,7 @@ namespace raincious
 					wstring Prefix = L"";
 					wstring Paramaters = L"";
 					wstring Description = L"";
+					bool Useable = false;
 				};
 
 				struct CommandProc : public CommandManual
@@ -62,6 +64,7 @@ namespace raincious
 					E_NOCOMMAND,
 					E_FAILED,
 					E_DISABLED,
+					E_FAILED_CHECK,
 					E_UNASSIGNED,
 					E_BAD,
 				};
@@ -74,6 +77,7 @@ namespace raincious
 				Error execute(shared_ptr<Clients::Client> &client, const wstring &command);
 
 				CommandManuals manuals(shared_ptr<Clients::Client> &client, const wstring &wscCmd);
+				CommandManuals manuals(shared_ptr<Clients::Client> &client, const wstring &wscCmd, bool onlyUseable);
 
 			protected:
 				CommandTreeItems threeItems;

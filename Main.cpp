@@ -81,18 +81,28 @@ void displayHelpScreen(shared_ptr<Clients::Client> client, const wstring &wscPar
 		assign[L"COMMAND"] = cmIter->Prefix;
 		assign[L"PARAMETER"] = cmIter->Paramaters;
 		assign[L"DESCRIPTION"] = cmIter->Description;
+		wstring fontColor = L"";
+
+		if (cmIter->Useable)
+		{
+			fontColor = L"color=\"aqua\"";
+		}
+		else
+		{
+			fontColor = L"color=\"gray\"";
+		}
 
 		if (cmIter->Paramaters != L"")
 		{
 			client->sendXMLMessage(
-				L"<TRA color=\"aqua\" font=\"default\" bold=\"true\"/><TEXT>  ${COMMAND} ${PARAMETER}</TEXT>",
+				L"<TRA " + fontColor + L" font=\"default\" bold=\"true\"/><TEXT>  ${COMMAND} ${PARAMETER}</TEXT>",
 				assign
 				);
 		}
 		else
 		{
 			client->sendXMLMessage(
-				L"<TRA color=\"aqua\" font=\"default\" bold=\"true\"/><TEXT>  ${COMMAND}</TEXT>",
+				L"<TRA " + fontColor + L" font=\"default\" bold=\"true\"/><TEXT>  ${COMMAND}</TEXT>",
 				assign
 				);
 		}
@@ -100,14 +110,14 @@ void displayHelpScreen(shared_ptr<Clients::Client> client, const wstring &wscPar
 		if (cmIter->Description != L"")
 		{
 			client->sendXMLMessage(
-				L"<TRA color=\"aqua\" font=\"default\" bold=\"true\"/><TEXT>   </TEXT><TRA color=\"aqua\" bold=\"default\"/><TEXT>${DESCRIPTION}</TEXT>",
+				L"<TRA " + fontColor + L" font=\"default\" bold=\"true\"/><TEXT>   </TEXT><TRA " + fontColor + L" bold=\"default\"/><TEXT>${DESCRIPTION}</TEXT>",
 				assign
 				);
 		}
 		else
 		{
 			client->sendXMLMessage(
-				L"<TRA color=\"aqua\" font=\"default\" bold=\"true\"/><TEXT>   </TEXT><TRA color=\"aqua\" bold=\"default\"/><TEXT>"
+				L"<TRA " + fontColor + L" font=\"default\" bold=\"true\"/><TEXT>   </TEXT><TRA " + fontColor + L" bold=\"default\"/><TEXT>"
 				+ Language::Get()->lang("COMMAND_HELP_DETAILAVAILABLE", L"Enter this command for detail.")
 				+ L"</TEXT>",
 				assign
@@ -309,10 +319,20 @@ bool UserCmdProcess(uint iClientID, const wstring &wscCmd)
 		return false;
 	}
 
+
 	shared_ptr<Clients::Client> client = Clients::Clients::Get().get(iClientID);
 	Clients::Client::MessageAssign msgAssign;
 
 	msgAssign[L"CMD"] = wscCmd;
+
+	// Handle /? command
+	if (wscCmd == L"/?")
+	{
+		displayHelpScreen(client, L"");
+
+		PluginReturnCode = SKIPPLUGINS_NOFUNCTIONCALL;
+		return true;
+	}
 
 	switch (Command::Get()->execute(client, wscCmd))
 	{
@@ -339,6 +359,16 @@ bool UserCmdProcess(uint iClientID, const wstring &wscCmd)
 	case Command::E_OK:
 		client->sendMessage(
 			Language::Get()->lang("COMMAND_RUN_OK", L"OK."),
+			msgAssign
+			);
+
+		PluginReturnCode = SKIPPLUGINS_NOFUNCTIONCALL;
+		return true;
+		break;
+
+	case Command::E_FAILED_CHECK:
+		client->sendMessage(
+			Language::Get()->lang("COMMAND_RUN_FAILED_CHECK", L"Inexecutable."),
 			msgAssign
 			);
 

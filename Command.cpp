@@ -30,12 +30,16 @@ namespace raincious
 				return false;
 			}
 
-			bool CommandBase::isRunable(shared_ptr<Clients::Client> &client)
+			void CommandBase::errored(shared_ptr<Clients::Client> &client, uint &errorCode)
+			{
+			}
+
+			bool CommandBase::check(shared_ptr<Clients::Client> &client, uint &errorCode)
 			{
 				return true;
 			}
 
-			wstring CommandBase::getClientManual(shared_ptr<Clients::Client> &client)
+			wstring CommandBase::manual(shared_ptr<Clients::Client> &client)
 			{
 				return L"";
 			}
@@ -79,6 +83,12 @@ namespace raincious
 
 			Command::CommandManuals Command::manuals(shared_ptr<Clients::Client> &client, const wstring &wscCmd)
 			{
+				return manuals(client, wscCmd, false);
+			}
+
+			Command::CommandManuals Command::manuals(shared_ptr<Clients::Client> &client, const wstring &wscCmd, bool onlyUseable)
+			{
+				uint subCmds = 0, tempError = 0;
 				CommandManuals manualList;
 				map <wstring, CommandTree*>::iterator cmdTreeIter;
 				SplitedCommandPrefix parameter;
@@ -89,17 +99,38 @@ namespace raincious
 				{
 					CommandManual man;
 
+					man.Useable = true;
+
 					if (cmdTreeIter->second->Disabled)
 					{
 						continue;
 					}
 
-					if (!cmdTreeIter->second->Proc->isRunable(client))
+					if (!cmdTreeIter->second->Proc->check(client, tempError))
 					{
-						continue;
+						if (onlyUseable)
+						{
+							continue;
+						}
+
+						man.Useable = false;
+					}
+					
+					if (cmdTreeIter->second->SubCommands.size() > 0)
+					{
+						// Load commands only when we able to use it. 
+						if (manuals(client, cmdTreeIter->second->Prefix, true).size() < 1)
+						{
+							if (onlyUseable)
+							{
+								continue;
+							}
+
+							man.Useable = false;
+						}
 					}
 
-					tmpDescription = cmdTreeIter->second->Proc->getClientManual(client);
+					tmpDescription = cmdTreeIter->second->Proc->manual(client);
 					if (tmpDescription == L"")
 					{
 						tmpDescription = cmdTreeIter->second->Description;
@@ -118,6 +149,7 @@ namespace raincious
 			Command::Error Command::execute(shared_ptr<Clients::Client> &client, const wstring &command)
 			{
 				Error result = E_OK;
+				uint errorCode = 0;
 				SplitedCommandPrefix parameter;
 				SplitedCommandPrefix::iterator pIter;
 				vector <wstring> parameterData;
@@ -136,6 +168,13 @@ namespace raincious
 				if (proc->Disabled)
 				{
 					return E_DISABLED;
+				}
+
+				if (!proc->Proc->check(client, errorCode))
+				{
+					proc->Proc->errored(client, errorCode);
+
+					return E_FAILED_CHECK;
 				}
 
 				for (pIter = parameter.begin(); pIter != parameter.end(); ++pIter)
@@ -219,6 +258,7 @@ namespace raincious
 
 				proc->Disabled = true;
 				proc->Assigned = false;
+				proc->Proc = unique_ptr<CommandBase>(new CommandBase());
 
 				Print::Debug(L"Command " + proc->Prefix + L" has been disabled.", L"");
 			}
