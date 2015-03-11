@@ -233,6 +233,9 @@ namespace raincious
 
 						if (HKE_OK == HkGetPlayerInfo(playerName, pi, false))
 						{
+							pi.wscBase = ToLower(pi.wscBase);
+							pi.wscSystem = ToLower(pi.wscSystem);
+
 							playerInfo = pi;
 							playerData = Players[ID()];
 
