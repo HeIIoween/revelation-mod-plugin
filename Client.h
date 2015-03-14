@@ -62,6 +62,9 @@ namespace raincious
 					HK_ERROR sendXMLMessage(wstring message);
 					HK_ERROR sendXMLMessage(wstring format, MessageAssign &assigns);
 
+					HK_ERROR sendPrompt(wstring prefix, wstring message);
+					HK_ERROR sendPrompt(wstring prefix, wstring format, MessageAssign &assigns);
+
 					HK_ERROR kill();
 					HK_ERROR beam(wstring baseNick);
 					HK_ERROR ban();

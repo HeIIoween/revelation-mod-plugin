@@ -23,7 +23,8 @@ namespace raincious
 
 			bool CommandBase::execute(shared_ptr<Clients::Client> &client, vector <wstring> &parameters)
 			{
-				client->sendMessage(
+				client->sendPrompt(
+					REVELATION_CMD_PREFIX,
 					Language::Get()->lang("COMMAND_RUN_NOT_IMPLEMENTED", L"Error: That command is not implemented.")
 					);
 

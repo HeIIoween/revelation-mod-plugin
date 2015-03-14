@@ -337,7 +337,9 @@ bool UserCmdProcess(uint iClientID, const wstring &wscCmd)
 	switch (Command::Get()->execute(client, wscCmd))
 	{
 	case Command::E_BAD:
-		client->sendMessage(
+		
+		client->sendPrompt(
+			REVELATION_CMD_PREFIX,
 			Language::Get()->lang("COMMAND_RUN_EXCEPTION", L"Error: Internal error happened when trying to execute command: ${CMD}"),
 			msgAssign
 			);
@@ -347,7 +349,8 @@ bool UserCmdProcess(uint iClientID, const wstring &wscCmd)
 		break;
 
 	case Command::E_DISABLED:
-		client->sendMessage(
+		client->sendPrompt(
+			REVELATION_CMD_PREFIX,
 			Language::Get()->lang("COMMAND_RUN_DISABLED", L"Error: Command ${CMD} has been disabled."),
 			msgAssign
 			);
@@ -357,7 +360,8 @@ bool UserCmdProcess(uint iClientID, const wstring &wscCmd)
 		break;
 
 	case Command::E_OK:
-		client->sendMessage(
+		client->sendPrompt(
+			REVELATION_CMD_PREFIX,
 			Language::Get()->lang("COMMAND_RUN_OK", L"OK."),
 			msgAssign
 			);
@@ -367,7 +371,8 @@ bool UserCmdProcess(uint iClientID, const wstring &wscCmd)
 		break;
 
 	case Command::E_FAILED_CHECK:
-		client->sendMessage(
+		client->sendPrompt(
+			REVELATION_CMD_PREFIX,
 			Language::Get()->lang("COMMAND_RUN_FAILED_CHECK", L"Inexecutable."),
 			msgAssign
 			);
@@ -377,7 +382,8 @@ bool UserCmdProcess(uint iClientID, const wstring &wscCmd)
 		break;
 
 	case Command::E_FAILED:
-		client->sendMessage(
+		client->sendPrompt(
+			REVELATION_CMD_PREFIX,
 			Language::Get()->lang("COMMAND_RUN_FAILED", L"Failed."),
 			msgAssign
 			);

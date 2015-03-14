@@ -5,6 +5,7 @@
 
 #define REVELATION_HOST_PLUGIN_CALL_LEVEL 255
 #define REVELATION_SUB_PLUGIN_CALL_LEVEL 128
+#define REVELATION_CMD_PREFIX Language::Get()->lang("DEFAULT_CMD_PREFIX", L"Revelation")
 
 using namespace std;
 

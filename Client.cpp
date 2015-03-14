@@ -474,6 +474,29 @@ namespace raincious
 					return HkFMsg(ID(), parsedMessage);
 				}
 
+				HK_ERROR Client::sendPrompt(wstring prefix, wstring message)
+				{
+					return sendXMLMessage(
+						L"<TRA color=\"#6699ff\" bold=\"default\" italic=\"default\" underline=\"default\"/><TEXT>" 
+						+ XMLText(prefix) 
+						+ L": </TEXT>"
+						L"<TRA color=\"#33cc99\" bold=\"default\" italic=\"default\" underline=\"default\"/><TEXT>"
+						+ XMLText(message)
+						+ L"</TEXT>");
+				}
+
+				HK_ERROR Client::sendPrompt(wstring prefix, wstring format, MessageAssign &assigns)
+				{
+					return sendXMLMessage(
+						L"<TRA color=\"#6699ff\" bold=\"default\" italic=\"default\" underline=\"default\"/><TEXT>"
+						+ XMLText(prefix)
+						+ L": </TEXT>"
+						L"<TRA color=\"#33cc99\" bold=\"default\" italic=\"default\" underline=\"default\"/><TEXT>"
+						+ XMLText(format)
+						+ L"</TEXT>",
+						assigns);
+				}
+
 				// Misc
 				HK_ERROR Client::kill()
 				{

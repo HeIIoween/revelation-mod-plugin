@@ -402,7 +402,9 @@ namespace raincious
 					case ID_PLAYERSTATUS_CTXMENU_KILL:
 						if (client.get(clientID)->kill() == HKE_OK)
 						{
-							client.get(clientID)->sendMessage(Language::Get()->lang(
+							client.get(clientID)->sendPrompt(
+								REVELATION_CMD_PREFIX, 
+								Language::Get()->lang(
 								"WIDGET_CMD_ADMIN_KILL",
 								L"You've killed by server admin."
 								));
@@ -414,7 +416,8 @@ namespace raincious
 					case ID_PLAYERSTATUS_CTXMENU_BAN:
 						if (client.get(clientID)->ban() == HKE_OK)
 						{
-							client.get(clientID)->sendMessage(
+							client.get(clientID)->sendPrompt(
+								REVELATION_CMD_PREFIX,
 								Language::Get()->lang(
 								"WIDGET_CMD_ADMIN_BAN",
 								L"You have been banned by server admin."
@@ -459,7 +462,9 @@ namespace raincious
 						return error;
 					}
 
-					client->sendMessage(Language::Get()->lang(
+					client->sendPrompt(
+						REVELATION_CMD_PREFIX, 
+						Language::Get()->lang(
 						"WIDGET_CMD_ADMIN_FINE",
 						L"All of your credits has been removed by server admin."
 						));
@@ -498,7 +503,8 @@ namespace raincious
 
 						if (playerInfo.iShip != 0)
 						{
-							client->sendMessage(
+							client->sendPrompt(
+								REVELATION_CMD_PREFIX,
 								Language::Get()->lang(
 									"WIDGET_CMD_ADMIN_BEAM_INSPACE",
 									L"Server admin wants to move you to ${BASE}" \
@@ -512,7 +518,8 @@ namespace raincious
 							return HKE_OK;
 						}
 
-						client->sendMessage(
+						client->sendPrompt(
+							REVELATION_CMD_PREFIX,
 							Language::Get()->lang(
 								"WIDGET_CMD_ADMIN_BEAM",
 								L"Server admin is moving your to ${BASE}. Please be prepared."
@@ -608,7 +615,8 @@ namespace raincious
 
 					if (err == HKE_OK)
 					{
-						client->sendMessage(
+						client->sendPrompt(
+							REVELATION_CMD_PREFIX,
 							Language::Get()->lang(
 								"WIDGET_CMD_ADMIN_BASEFRIENDLY",
 								L"You are now friendly with the faction which runing the base you currently docked."
