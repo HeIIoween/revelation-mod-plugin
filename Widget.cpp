@@ -526,9 +526,9 @@ namespace raincious
 
 					while (!main->threadStopSignal)
 					{
-						Sleep(1000);
-
 						main->tick();
+
+						Sleep(1000);
 					}
 
 					main->tickThreadRunning = false;

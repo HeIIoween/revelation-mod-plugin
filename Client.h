@@ -45,6 +45,8 @@ namespace raincious
 					wstring getAccountID();
 					wstring getIP();
 
+					bool docked(); // Not in real time
+
 					wstring getSystemNick();
 					DataItem::SystemData* getSystem();
 

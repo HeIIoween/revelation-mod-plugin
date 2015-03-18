@@ -490,7 +490,7 @@ EXPORT PLUGIN_INFO* Get_PluginInfo()
 	p_PI->lstHooks.push_back(PLUGIN_HOOKINFO((FARPROC*)&HkIServerImpl::SystemSwitchOutComplete, PLUGIN_HkIServerImpl_SystemSwitchOutComplete, REVELATION_HOST_PLUGIN_CALL_LEVEL));
 
 	p_PI->lstHooks.push_back(PLUGIN_HOOKINFO((FARPROC*)&HkIServerImpl::Timer, PLUGIN_HkTimerCheckKick, REVELATION_HOST_PLUGIN_CALL_LEVEL));
-	p_PI->lstHooks.push_back(PLUGIN_HOOKINFO((FARPROC*)&HkIServerImpl::DisConnect, PLUGIN_HkIServerImpl_DisConnect, REVELATION_HOST_PLUGIN_CALL_LEVEL));
+	p_PI->lstHooks.push_back(PLUGIN_HOOKINFO((FARPROC*)&HkIServerImpl::DisConnect_AFTER, PLUGIN_HkIServerImpl_DisConnect_AFTER, REVELATION_HOST_PLUGIN_CALL_LEVEL));
 
 	p_PI->lstHooks.push_back(PLUGIN_HOOKINFO((FARPROC*)&Shutdown, PLUGIN_HkIServerImpl_Shutdown, REVELATION_HOST_PLUGIN_CALL_LEVEL));
 

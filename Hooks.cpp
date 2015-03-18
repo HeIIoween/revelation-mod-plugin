@@ -50,7 +50,7 @@ namespace HkIServerImpl
 		Clients::Clients::Get().renew(iClientID);
 	}
 	
-	void __stdcall DisConnect(uint iClientID, enum EFLConnection p2)
+	void __stdcall DisConnect_AFTER(uint iClientID, enum EFLConnection p2)
 	{
 		PluginReturnCode = DEFAULT_RETURNCODE;
 

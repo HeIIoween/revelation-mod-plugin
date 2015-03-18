@@ -12,5 +12,5 @@ namespace HkIServerImpl
 
 	void __stdcall PlayerLaunch_AFTER(uint iShip, uint iClientID);
 
-	void __stdcall DisConnect(uint iClientID, enum EFLConnection p2);
+	void __stdcall DisConnect_AFTER(uint iClientID, enum EFLConnection p2);
 }

@@ -336,6 +336,16 @@ namespace raincious
 					return playerInfo.wscIP;
 				}
 
+				bool Client::docked() 
+				{
+					if (playerInfo.iShip != 0)
+					{
+						return false;
+					}
+
+					return true;
+				}
+
 				// System
 				wstring Client::getSystemNick()
 				{
@@ -477,7 +487,7 @@ namespace raincious
 				HK_ERROR Client::sendPrompt(wstring prefix, wstring message)
 				{
 					return sendXMLMessage(
-						L"<TRA color=\"#6699ff\" bold=\"default\" italic=\"default\" underline=\"default\"/><TEXT>" 
+						L"<TRA font=\"default\" color=\"#6699ff\" bold=\"default\" italic=\"default\" underline=\"default\"/><TEXT>" 
 						+ XMLText(prefix) 
 						+ L": </TEXT>"
 						L"<TRA color=\"#33cc99\" bold=\"default\" italic=\"default\" underline=\"default\"/><TEXT>"
@@ -488,7 +498,7 @@ namespace raincious
 				HK_ERROR Client::sendPrompt(wstring prefix, wstring format, MessageAssign &assigns)
 				{
 					return sendXMLMessage(
-						L"<TRA color=\"#6699ff\" bold=\"default\" italic=\"default\" underline=\"default\"/><TEXT>"
+						L"<TRA font=\"default\" color=\"#6699ff\" bold=\"default\" italic=\"default\" underline=\"default\"/><TEXT>"
 						+ XMLText(prefix)
 						+ L": </TEXT>"
 						L"<TRA color=\"#33cc99\" bold=\"default\" italic=\"default\" underline=\"default\"/><TEXT>"
