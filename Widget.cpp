@@ -464,7 +464,7 @@ namespace raincious
 					{
 						while (!main->threadStopSignal)
 						{
-							waitStatus = MsgWaitForMultipleObjects(0, NULL, FALSE, 1000, QS_ALLINPUT);
+							waitStatus = MsgWaitForMultipleObjects(0, NULL, FALSE, 500, QS_ALLINPUT);
 
 							if (waitStatus == WAIT_TIMEOUT)
 							{
@@ -609,12 +609,12 @@ namespace raincious
 					Print::Debug("Waiting UI threads to be exited.", "");
 
 					// Stop tick first
-					if (tickThreadRunning)
+					if (tickThreadHandle != NULL)
 					{
 						WaitForSingleObject(tickThreadHandle, INFINITE);
 					}
 
-					if (uiThreadRunning)
+					if (uiThreadHandle != NULL)
 					{
 						WaitForSingleObject(uiThreadHandle, INFINITE);
 					}
