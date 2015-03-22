@@ -612,18 +612,20 @@ namespace raincious
 					if (tickThreadHandle != NULL)
 					{
 						WaitForSingleObject(tickThreadHandle, INFINITE);
+
+						CloseHandle(tickThreadHandle);
+
+						tickThreadHandle = NULL;
 					}
 
 					if (uiThreadHandle != NULL)
 					{
 						WaitForSingleObject(uiThreadHandle, INFINITE);
+
+						CloseHandle(uiThreadHandle);
+
+						uiThreadHandle = NULL;
 					}
-
-					CloseHandle(tickThreadHandle);
-					CloseHandle(uiThreadHandle);
-
-					tickThreadHandle = NULL;
-					uiThreadHandle = NULL;
 
 					threadStopSignal = false;
 
