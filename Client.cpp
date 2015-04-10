@@ -56,7 +56,7 @@ namespace raincious
 
 				void Clients::renew(uint& clientID)
 				{
-					if (add(clientID))
+					if (!exists(clientID))
 					{
 						return;
 					}
@@ -70,10 +70,7 @@ namespace raincious
 
 					for (iter = list.begin(); iter != list.end(); ++iter)
 					{
-						if (exists((uint)iter->first))
-						{
-							renew((uint)iter->first);
-						}
+						renew(iter->first);
 					}
 				}
 
