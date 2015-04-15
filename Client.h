@@ -115,7 +115,7 @@ namespace raincious
 					shared_ptr<Client> get(uint& clientID);
 					bool exists(uint& clientID);
 
-					void renew(uint& clientID);
+					void renew(uint clientID);
 					void renew();
 
 					uint size();

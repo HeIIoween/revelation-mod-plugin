@@ -54,10 +54,12 @@ namespace raincious
 					return list.size();
 				}
 
-				void Clients::renew(uint& clientID)
+				void Clients::renew(uint clientID)
 				{
 					if (!exists(clientID))
 					{
+						add(clientID);
+
 						return;
 					}
 
@@ -67,10 +69,11 @@ namespace raincious
 				void Clients::renew()
 				{
 					ClientList::iterator iter;
+					ClientList clientList = list;
 
-					for (iter = list.begin(); iter != list.end(); ++iter)
+					for (iter = clientList.begin(); iter != clientList.end(); ++iter)
 					{
-						renew(iter->first);
+						renew(iter->second->ID());
 					}
 				}
 
