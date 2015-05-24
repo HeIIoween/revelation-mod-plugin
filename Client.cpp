@@ -73,6 +73,11 @@ namespace raincious
 
 					for (iter = clientList.begin(); iter != clientList.end(); ++iter)
 					{
+						if (!exists(iter->second->ID()) 
+						{
+							continue;	
+						}
+						
 						renew(iter->second->ID());
 					}
 				}
